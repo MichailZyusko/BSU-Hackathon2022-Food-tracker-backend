@@ -1,7 +1,38 @@
-import axios from 'axios';
+const axios = require('axios');
+const AWS = require('aws-sdk');
 
-const greenProductDB =[];
+const awsConfig = {
+  "region": "us-east-2",
+  "endpoint": "http://dynamodb.us-east-2.amazonaws.com",
+  "accessKeyId": "AKIA4FAQIRYILQUIV5XS",
+  "secretAccessKey": "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"
+};
+
+AWS.config.update(awsConfig);
+
+const docClient = new AWS.DynamoDB.DocumentClient();
 const getProductByIdURL = 'https://green-dostavka.by/api/v1/products/';
+
+const params = (Item) => ({
+  "TableName" : "greenProductsDB_0",
+  "Item" : {
+    "title": Item.title,
+    "id": Number.parseInt(Item.id),
+    "description": Item.description,
+  },
+});
+
+const createItem = async (product) => {
+  try {
+    const param = params(product);
+
+    console.log(param);
+
+    await docClient.put(param).promise();
+  } catch (err) {
+    return err;
+  }
+};
 
 const getProductById = async (productID) => {
   try {
@@ -12,35 +43,39 @@ const getProductById = async (productID) => {
 
       return !(description || barcodes)
           ? null
-          : {
-            title,
-            barcode: barcodes[0]?.code,
-            description,
-          };
+          : JSON.parse(JSON.stringify({
+            "title": title,
+            "id": barcodes[0].code,
+            "description": description,
+          }));
     }
   } catch (e) {
     console.error(e);
   }
 };
 
-console.time('Time');
-for (let i = 0; i <= 500; i += 100) {
-  const url =`https://green-dostavka.by/api/v1/products?storeId=2&skip=${i}`;
+exports.parserHandler = async (event) => {
+  try {
+    console.time('Time');
+    for (let i = 0; i <= 100; i += 100) {
+      const url =`https://green-dostavka.by/api/v1/products?storeId=2&skip=${i}`;
 
-  const response = await axios.get(url);
+      const response = await axios.get(url);
 
-  if (response.status !== 200) {
-    continue;
+      if (response.status !== 200) {
+        continue;
+      }
+
+      response.data.items.map( async ({id: productID}) => {
+        const product = await getProductById(productID);
+
+        await createItem(product);
+      });
+
+    }
+    console.timeEnd('Time');
   }
-
-  const productIDs = response.data.items.map((item) => item.id);
-
-  productIDs.map(async (productID) => {
-    const product = await getProductById(productID);
-
-    greenProductDB.push(product);
-  });
-}
-console.timeEnd('Time');
-
-console.log(greenProductDB);
+  catch (error) {
+    console.log(error);
+  }
+};
