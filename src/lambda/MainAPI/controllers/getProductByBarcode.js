@@ -9,13 +9,7 @@ const awsConfig = {
 
 AWS.config.update(awsConfig);
 
-const db = new AWS.DynamoDB.DocumentClient();
-// const db = new AWS.DynamoDB.DocumentClient({ params: { TableName: 'greenProductsDB_0' } });
-
-const param = (barcode) => ({
-  TableName: 'greenProductsDB_0',
-  Key: { id: { N: barcode.toString() } },
-});
+const db = new AWS.DynamoDB.DocumentClient({ params: { TableName: 'greenProductsDB_0' } });
 
 export default async (req, res, next) => {
   try {
@@ -23,7 +17,9 @@ export default async (req, res, next) => {
 
     console.log('getProductByBarcode', barcode);
 
-    const product = await db.get(param(barcode)).promise();
+    const { Item: product } = await db.get({
+      Key: { id: +barcode },
+    }).promise();
 
     console.log('getProductByBarcode', product);
 

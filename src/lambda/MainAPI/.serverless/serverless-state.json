@@ -7,7 +7,7 @@
     "provider": {
       "name": "aws",
       "runtime": "nodejs14.x",
-      "stage": "stage",
+      "stage": "dev",
       "region": "us-east-2",
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
@@ -86,7 +86,7 @@
           "AppLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/BSU-Hackathon2022-FOOD-TRACKER-API-stage-app"
+              "LogGroupName": "/aws/lambda/BSU-Hackathon2022-FOOD-TRACKER-API-dev-app"
             }
           },
           "IamRoleLambdaExecution": {
@@ -115,7 +115,7 @@
                       "-",
                       [
                         "BSU-Hackathon2022-FOOD-TRACKER-API",
-                        "stage",
+                        "dev",
                         "lambda"
                       ]
                     ]
@@ -131,7 +131,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/BSU-Hackathon2022-FOOD-TRACKER-API-stage*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/BSU-Hackathon2022-FOOD-TRACKER-API-dev*:*"
                           }
                         ]
                       },
@@ -142,7 +142,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/BSU-Hackathon2022-FOOD-TRACKER-API-stage*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/BSU-Hackathon2022-FOOD-TRACKER-API-dev*:*:*"
                           }
                         ]
                       }
@@ -156,7 +156,7 @@
                   "-",
                   [
                     "BSU-Hackathon2022-FOOD-TRACKER-API",
-                    "stage",
+                    "dev",
                     {
                       "Ref": "AWS::Region"
                     },
@@ -173,11 +173,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/BSU-Hackathon2022-FOOD-TRACKER-API/stage/1641573005783-2022-01-07T16:30:05.783Z/BSU-Hackathon2022-FOOD-TRACKER-API.zip"
+                "S3Key": "serverless/BSU-Hackathon2022-FOOD-TRACKER-API/dev/1641575100562-2022-01-07T17:05:00.562Z/BSU-Hackathon2022-FOOD-TRACKER-API.zip"
               },
               "Handler": "index.handler",
               "Runtime": "nodejs14.x",
-              "FunctionName": "BSU-Hackathon2022-FOOD-TRACKER-API-stage-app",
+              "FunctionName": "BSU-Hackathon2022-FOOD-TRACKER-API-dev-app",
               "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
@@ -191,20 +191,20 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionYYTgJQtyzjslya4DklA23yVLzDN26tk2wzYujcic": {
+          "AppLambdaVersionIbLNrevYBLnSRwUWLgW0tllD6Zh0X4CpgVchWBhwy8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "IxA1K4LtzRKFZAVpD0hsG6LoyqgKza1CR5zwqtWpAn4="
+              "CodeSha256": "c/g2n+UsNwUxekjDqkd7TdWDEvzAGGcZUv4Ze/H1JAI="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "stage-BSU-Hackathon2022-FOOD-TRACKER-API",
+              "Name": "dev-BSU-Hackathon2022-FOOD-TRACKER-API",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -356,13 +356,13 @@
               "AppLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1641573002263": {
+          "ApiGatewayDeployment1641575096741": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               },
-              "StageName": "stage"
+              "StageName": "dev"
             },
             "DependsOn": [
               "ApiGatewayMethodApiV1ProductsBarcodeVarGet",
@@ -413,16 +413,16 @@
               "Ref": "ServerlessDeploymentBucket"
             },
             "Export": {
-              "Name": "sls-BSU-Hackathon2022-FOOD-TRACKER-API-stage-ServerlessDeploymentBucketName"
+              "Name": "sls-BSU-Hackathon2022-FOOD-TRACKER-API-dev-ServerlessDeploymentBucketName"
             }
           },
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionYYTgJQtyzjslya4DklA23yVLzDN26tk2wzYujcic"
+              "Ref": "AppLambdaVersionIbLNrevYBLnSRwUWLgW0tllD6Zh0X4CpgVchWBhwy8"
             },
             "Export": {
-              "Name": "sls-BSU-Hackathon2022-FOOD-TRACKER-API-stage-AppLambdaFunctionQualifiedArn"
+              "Name": "sls-BSU-Hackathon2022-FOOD-TRACKER-API-dev-AppLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -443,12 +443,12 @@
                   {
                     "Ref": "AWS::URLSuffix"
                   },
-                  "/stage"
+                  "/dev"
                 ]
               ]
             },
             "Export": {
-              "Name": "sls-BSU-Hackathon2022-FOOD-TRACKER-API-stage-ServiceEndpoint"
+              "Name": "sls-BSU-Hackathon2022-FOOD-TRACKER-API-dev-ServiceEndpoint"
             }
           }
         }
@@ -549,13 +549,13 @@
             "http": "POST /api/v1/products"
           }
         ],
-        "name": "BSU-Hackathon2022-FOOD-TRACKER-API-stage-app",
+        "name": "BSU-Hackathon2022-FOOD-TRACKER-API-dev-app",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionYYTgJQtyzjslya4DklA23yVLzDN26tk2wzYujcic"
+        "versionLogicalId": "AppLambdaVersionIbLNrevYBLnSRwUWLgW0tllD6Zh0X4CpgVchWBhwy8"
       }
     },
     "configValidationMode": "warn",
@@ -576,7 +576,7 @@
     "artifact": "C:\\Users\\micha\\Documents\\GitHub\\BSU-Hackathon2022-Food-tracker-backend\\src\\lambda\\MainAPI\\.serverless\\BSU-Hackathon2022-FOOD-TRACKER-API.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/BSU-Hackathon2022-FOOD-TRACKER-API/stage/1641573005783-2022-01-07T16:30:05.783Z",
+    "artifactDirectoryName": "serverless/BSU-Hackathon2022-FOOD-TRACKER-API/dev/1641575100562-2022-01-07T17:05:00.562Z",
     "artifact": "BSU-Hackathon2022-FOOD-TRACKER-API.zip"
   }
 }
