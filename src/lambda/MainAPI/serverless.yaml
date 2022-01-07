@@ -1,0 +1,14 @@
+service: BSU-Hackathon2022-FOOD-TRACKER-API
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: stage
+  region: us-east-2
+
+functions:
+  app:
+    handler: index.handler
+    events:
+      - http: GET /api/v1/products/{barcode}
+      - http: POST /api/v1/products
