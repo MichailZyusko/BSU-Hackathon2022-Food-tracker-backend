@@ -1,4 +1,4 @@
-export default async (description) => description
+export default (description) => description
   .split(', ')
   .map((item) => ({
     name: item,

@@ -13,18 +13,23 @@ const db = new AWS.DynamoDB.DocumentClient();
 
 const params = (Item) => ({
   TableName: 'substance',
-  Item: JSON.parse(JSON.stringify(Item)),
+  Item: {
+    name: Item.name,
+    quality: +Item.quality,
+  },
 });
 
 export default async (product) => {
   try {
     if (!product) return null;
 
-    const param = params(product);
+    const param = params(JSON.parse(JSON.stringify(product)));
 
     console.log(param);
 
-    await db.put(param).promise();
+    const putItem = await db.put(param).promise();
+
+    return putItem;
   } catch (e) {
     throw new Error(e);
   }

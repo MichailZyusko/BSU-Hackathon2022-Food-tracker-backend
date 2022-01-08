@@ -8,17 +8,10 @@ export const handler = async () => {
 
     const items = await getAllItemsFromDB();
 
-    console.log(items);
-
     items.forEach(({ description }) => {
-      console.log('description', description);
       const arr = getAllSubstanceFromDescription(description);
 
-      console.log('arr', arr);
-
       arr.forEach(async (item) => {
-        console.log('item: ', item);
-
         const putItem = await createItem(item);
 
         console.log('putItem: ', putItem);
