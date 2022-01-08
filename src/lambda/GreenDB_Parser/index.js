@@ -1,8 +1,8 @@
 import axios from 'axios';
-import getProductById from '../helpers/greenParserLambda/getProductById.js';
-import createItem from '../helpers/greenParserLambda/createItem.js';
+import getProductById from './helpers/getProductById.js';
+import createItem from './helpers/createItem.js';
 
-export const parserHandler = async () => {
+export const handler = async () => {
   try {
     console.time('Time');
     for (let i = 0; i <= 100; i += 100) {
@@ -14,11 +14,13 @@ export const parserHandler = async () => {
         continue;
       }
 
-      response.data.items.map(async ({ id: productID }) => {
-        const product = await getProductById(productID);
+      response.data.items
+        .filter(({ energyCost }) => energyCost)
+        .map(async ({ id: productID }) => {
+          const product = await getProductById(productID);
 
-        await createItem(product);
-      });
+          await createItem(product);
+        });
     }
     console.timeEnd('Time');
   } catch (error) {

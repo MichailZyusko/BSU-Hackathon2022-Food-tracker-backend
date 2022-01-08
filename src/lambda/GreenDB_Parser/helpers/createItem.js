@@ -9,7 +9,7 @@ const awsConfig = {
 
 AWS.config.update(awsConfig);
 
-const docClient = new AWS.DynamoDB.DocumentClient();
+const db = new AWS.DynamoDB.DocumentClient();
 
 const params = (Item) => ({
   TableName: 'greenProductsDB_0',
@@ -22,11 +22,11 @@ const params = (Item) => ({
 
 export default async (product) => {
   try {
+    if (!product) return null;
+
     const param = params(product);
 
-    console.log(param);
-
-    await docClient.put(param).promise();
+    await db.put(param).promise();
   } catch (e) {
     throw new Error(e);
   }

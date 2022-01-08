@@ -1,4 +1,4 @@
-service: BSU-Hackathon2022-FOOD-TRACKER-GREEN_DB_PARSER
+service: BSU-Hackathon2022-GREEN-DB-PARSER
 
 provider:
   name: aws

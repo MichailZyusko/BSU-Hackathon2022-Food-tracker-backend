@@ -17,7 +17,9 @@
     "url": "https://github.com/MichailZyusko/BSU-Hackathon2022-Food-tracker-backend/issues"
   },
   "homepage": "https://github.com/MichailZyusko/BSU-Hackathon2022-Food-tracker-backend#readme",
-  "dependencies": {},
+  "dependencies": {
+    "aws-sdk": "^2.1052.0"
+  },
   "devDependencies": {
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
