@@ -161,7 +161,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/BSU-Hackathon2022-SUBSTANE-DB-CREATOR/dev/1641641939781-2022-01-08T11:38:59.781Z/BSU-Hackathon2022-SUBSTANE-DB-CREATOR.zip"
+          "S3Key": "serverless/BSU-Hackathon2022-SUBSTANE-DB-CREATOR/dev/1642362039997-2022-01-16T19:40:39.997Z/BSU-Hackathon2022-SUBSTANE-DB-CREATOR.zip"
         },
         "Handler": "index.handler",
         "Runtime": "nodejs14.x",
@@ -179,14 +179,14 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersion6TryOEB7oGj6VRVtWBQrNHdIJAc6dWUeJvqWYrP8": {
+    "AppLambdaVersionBjv5iuYAOErUJn6ZmLYfgVyHOTNkZEAh0r9IW4eeg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "5OPbanScCTttn3GIWYlAHLXpIu3qyAxUdUCIVD4y2bs="
+        "CodeSha256": "UKNePlVswHC2YZp2Dvx2kX0X6R4c2AGcpTeigRNncPQ="
       }
     }
   },
@@ -202,7 +202,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersion6TryOEB7oGj6VRVtWBQrNHdIJAc6dWUeJvqWYrP8"
+        "Ref": "AppLambdaVersionBjv5iuYAOErUJn6ZmLYfgVyHOTNkZEAh0r9IW4eeg"
       },
       "Export": {
         "Name": "sls-BSU-Hackathon2022-SUBSTANE-DB-CREATOR-dev-AppLambdaFunctionQualifiedArn"

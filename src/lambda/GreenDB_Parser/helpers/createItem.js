@@ -17,6 +17,9 @@ const params = (Item) => ({
     title: Item.title,
     id: +Item.id,
     description: Item.description,
+    categoriesIds: Item.categoriesIds,
+    energyCost: Item.energyCost,
+    class: 'A',
   },
 });
 

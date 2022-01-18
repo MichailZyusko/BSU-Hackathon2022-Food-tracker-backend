@@ -8,7 +8,7 @@ export default async (productID) => {
 
     if (response.status !== 200) return null;
 
-    const { description, barcodes, title } = response.data;
+    const { description, barcodes, title, categoriesIds, energyCost } = response.data;
 
     if (barcodes[0].code.length !== 13) return null;
 
@@ -18,6 +18,8 @@ export default async (productID) => {
         title,
         description,
         id: barcodes[0].code,
+            categoriesIds,
+            energyCost
       }));
   } catch (e) {
     throw new Error(e);

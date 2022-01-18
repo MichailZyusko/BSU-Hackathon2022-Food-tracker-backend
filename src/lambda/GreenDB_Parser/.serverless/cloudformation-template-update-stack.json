@@ -161,7 +161,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/BSU-Hackathon2022-GREEN-DB-PARSER/dev/1641638756714-2022-01-08T10:45:56.714Z/BSU-Hackathon2022-GREEN-DB-PARSER.zip"
+          "S3Key": "serverless/BSU-Hackathon2022-GREEN-DB-PARSER/dev/1642363056393-2022-01-16T19:57:36.393Z/BSU-Hackathon2022-GREEN-DB-PARSER.zip"
         },
         "Handler": "index.handler",
         "Runtime": "nodejs14.x",
@@ -179,14 +179,14 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionlbfRS1cYuWhT6mej7ZkSSrpncD0bRoLXQKNy19QxVw": {
+    "AppLambdaVersionrsUhWEZcanzdMRQw3aubHA2r8ePvlVnyJW74ikFznqc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "a3fGc0+ktLnxMqOeX7YQiS0oy9mqwJ+L5jA9CY2xg3U="
+        "CodeSha256": "Ry0JDmw5CqVIBCFaAoaEZvd9Nt7BGvvtN5IiPVhKP30="
       }
     }
   },
@@ -202,7 +202,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionlbfRS1cYuWhT6mej7ZkSSrpncD0bRoLXQKNy19QxVw"
+        "Ref": "AppLambdaVersionrsUhWEZcanzdMRQw3aubHA2r8ePvlVnyJW74ikFznqc"
       },
       "Export": {
         "Name": "sls-BSU-Hackathon2022-GREEN-DB-PARSER-dev-AppLambdaFunctionQualifiedArn"
