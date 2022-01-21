@@ -8,19 +8,21 @@ export default async (productID) => {
 
     if (response.status !== 200) return null;
 
-    const { description, barcodes, title, categoriesIds, energyCost } = response.data;
+    const {
+      description, barcodes, title, categoriesIds, energyCost,
+    } = response.data;
 
     if (barcodes[0].code.length !== 13) return null;
 
     return !(description || barcodes)
       ? null
-      : JSON.parse(JSON.stringify({
+      : {
         title,
         description,
         id: barcodes[0].code,
-            categoriesIds,
-            energyCost
-      }));
+        categoriesIds,
+        energyCost,
+      };
   } catch (e) {
     throw new Error(e);
   }

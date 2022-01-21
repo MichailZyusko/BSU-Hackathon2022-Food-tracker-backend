@@ -2,14 +2,13 @@ import AWS from 'aws-sdk';
 
 const awsConfig = {
   region: process.env.region,
-  endpoint: process.env.endpoint,
   accessKeyId: process.env.accessKeyId,
   secretAccessKey: process.env.secretAccessKey,
 };
 
 AWS.config.update(awsConfig);
 
-const db = new AWS.DynamoDB.DocumentClient({ params: { TableName: 'greenProductsDB_0' } });
+const s3 = new AWS.S3();
 
 export default async (req, res, next) => {
   try {
@@ -17,19 +16,20 @@ export default async (req, res, next) => {
 
     console.log('getProductByBarcode', barcode);
 
-    const { Item: product } = await db.get({
-      Key: { id: +barcode },
+    const { Body } = await s3.getObject({
+      Bucket: 'greendatabase',
+      Key: `${barcode}.json`,
     }).promise();
 
-    console.log('getProductByBarcode', product);
+    console.log('getProductByBarcode', Body);
 
-    if (!product) {
+    if (!Body) {
       res.status(404).json({
-        message: 'Product not found',
+        message: 'Product not found in database',
       });
     }
 
-    res.status(200).json({ product });
+    res.status(200).json(JSON.parse(Body.toString('utf-8')));
   } catch (error) {
     next(error);
   }

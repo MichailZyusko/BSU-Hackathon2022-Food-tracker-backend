@@ -2,25 +2,18 @@ import AWS from 'aws-sdk';
 
 const awsConfig = {
   region: process.env.region,
-  endpoint: process.env.endpoint,
   accessKeyId: process.env.accessKeyId,
   secretAccessKey: process.env.secretAccessKey,
 };
 
 AWS.config.update(awsConfig);
 
-const db = new AWS.DynamoDB.DocumentClient();
+const s3 = new AWS.S3();
 
 const params = (Item) => ({
-  TableName: 'greenProductsDB_0',
-  Item: {
-    title: Item.title,
-    id: +Item.id,
-    description: Item.description,
-    categoriesIds: Item.categoriesIds,
-    energyCost: Item.energyCost,
-    class: 'A',
-  },
+  Bucket: 'greendatabase',
+  Key: `${Item.id}.json`,
+  Body: JSON.stringify(Item),
 });
 
 export default async (product) => {
@@ -29,7 +22,7 @@ export default async (product) => {
 
     const param = params(product);
 
-    await db.put(param).promise();
+    await s3.upload(param).promise();
   } catch (e) {
     throw new Error(e);
   }
