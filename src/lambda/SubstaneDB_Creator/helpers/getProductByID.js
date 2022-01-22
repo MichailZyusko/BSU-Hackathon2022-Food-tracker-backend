@@ -11,15 +11,16 @@ AWS.config.update(awsConfig);
 const s3 = new AWS.S3();
 
 export default async (Key) => {
-  const data = await s3.getObject({
-    Bucket: 'greendatabase',
-    Key,
-  }).promise();
-  console.log(data);
+  try {
+    const data = await s3.getObject({
+      Bucket: 'greendatabase',
+      Key,
+    }).promise();
 
-  const result = JSON.parse(data.Body.toString('utf-8'));
+    const product = JSON.parse(data.Body.toString('utf-8'));
 
-  console.log(result);
-
-  return result;
+    return product;
+  } catch (e) {
+    console.error(e);
+  }
 };
