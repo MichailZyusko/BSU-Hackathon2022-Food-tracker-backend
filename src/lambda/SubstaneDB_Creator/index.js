@@ -1,6 +1,7 @@
 import getAllSubstanceFromDescription from './helpers/getAllSubstanceFromDescription.js';
 import createItem from './helpers/createItem.js';
 import getAllItemsFromDB from './helpers/getAllItemsFromDB.js';
+import getProductByID from './helpers/getProductByID.js';
 
 export const handler = async () => {
   try {
@@ -8,13 +9,15 @@ export const handler = async () => {
 
     const items = await getAllItemsFromDB();
 
-    items.forEach(({ description }) => {
+    items.forEach(async (item) => {
+      const { description } = await getProductByID(item);
+
+      console.log(description);
+
       const arr = getAllSubstanceFromDescription(description);
 
       arr.forEach(async (item) => {
-        const putItem = await createItem(item);
-
-        console.log('putItem: ', putItem);
+        await createItem(item);
       });
     });
 
