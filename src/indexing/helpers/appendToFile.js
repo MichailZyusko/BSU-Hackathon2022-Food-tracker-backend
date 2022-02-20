@@ -1,61 +1,48 @@
 import { promises as fs } from 'fs';
-import * as path from "path";
 
 const isExistFile = async (filePath) => {
-    try {
-        await fs.stat(filePath);
+  try {
+    await fs.stat(filePath);
 
-        return true;
-    } catch (err) {
-        return false;
-    }
+    return true;
+  } catch (err) {
+    return false;
+  }
 };
 export const readFile = async (filePath) => {
-    try {
-        const fileContent = await fs.readFile(filePath, 'utf8');
+  const fileContent = await fs.readFile(filePath, 'utf8');
 
-        return JSON.parse(fileContent);
-    } catch (err) {
-        throw err;
-    }
+  return JSON.parse(fileContent);
 };
-const writeFile = async (filePath, data) => {
-    try {
-        await fs.writeFile(filePath, JSON.stringify(data));
-    } catch (err) {
-        throw err;
-    }
+export const writeFile = async (filePath, data) => {
+  await fs.writeFile(filePath, JSON.stringify(data));
 };
 const appendFile = async (filePath, product) => {
-    try {
-        const fileContent = await readFile(filePath);
+  const fileContent = await readFile(filePath);
 
-        if (fileContent.some((item) => item.name === product.name)) {
-            throw new Error('Product already exist');
-        }
+  if (fileContent.some((item) => item.name === product.name)) {
+    throw new Error('Product already exist');
+  }
 
-        fileContent.push(product);
+  fileContent.push(product);
 
-       return fileContent;
-    } catch (err) {
-        throw err;
-    }
+  return fileContent;
 };
 
 export const appendToFile = async ({ name, productName }) => {
-    try {
-        const dbFilePath = `./db/${productName}.json`;
-        const nGramFilePath = `./n-grams/${name}.json`;
+  try {
+    const dbFilePath = `./db/${productName}.json`;
+    const nGramFilePath = `./n-grams/${name}.json`;
 
-        const isExists = await isExistFile(nGramFilePath);
-        const product = await readFile(dbFilePath);
+    const isExists = await isExistFile(nGramFilePath);
+    const product = await readFile(dbFilePath);
 
-        const data = isExists
-            ? await appendFile(nGramFilePath, product)
-            : [product];
+    const data = isExists
+      ? await appendFile(nGramFilePath, product)
+      : [product];
 
-        await writeFile(nGramFilePath, data);
-    } catch (error) {
-        // console.error(error);
-    }
-}
+    await writeFile(nGramFilePath, data);
+  } catch (error) {
+    console.error(error);
+  }
+};
