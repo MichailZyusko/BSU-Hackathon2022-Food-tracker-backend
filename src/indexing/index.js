@@ -28,7 +28,11 @@ import searchProduct from './helpers/searchProduct.js';
 //   console.timeEnd('Time');
 // })();
 
-const description = 'филе сельди*, масло подсолнечное (С) или рапсовое (D), соль, регуляторы кислотности винная, лимонная кислоты, усилитель вкуса и аромата глутамат натрия 1-замещенный, смесь пряностей, консерванты бензоат натрия, сорбат калия';
+const description = `мука пшеничная, говядина, вода питьевая, свинина вареная, масло сливочное, лук репчатый, яичный порошок, филе птицы,
+ соль поваренная пищевая йодированная (содержит антислеживающий агент Е536), пшеничная клетчатка, 
+ комплексная пищевая добавка (молоко сухое обезжиреное, мальтодекстрин),
+  масло подсолнечное, сахар,
+   перец черный молотый, перец душистый молотый, кориандр молотый`;
 
 (async (description) => {
   console.time('Time');
@@ -39,6 +43,11 @@ const description = 'филе сельди*, масло подсолнечное
   const data = (await Promise.all(products.map(async (product) => await searchProduct(product))))
     .filter((item) => !!item);
 
+  const result = `${(data
+    .reduce((acc, item, index) => (1 / index + 1) * ((item.grams + item.kcal) / 2)) * 12)
+    .toFixed(2)} %`;
+
   console.log('Output: ', data);
+  console.log('Result: ', result);
   console.timeEnd('Time');
 })(description);
